@@ -1,13 +1,23 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"go-wafw00f/tool"
 	"go-wafw00f/waf"
 )
 
 func main() {
-	domains := tool.SubfinderRun("highradius.com")
+
+	urlPtr := flag.String("domain", "", "Enter the domain name")
+	flag.Parse()
+
+	if *urlPtr == "" {
+		fmt.Printf("%s", "Enter a valid domain")
+		return
+	}
+
+	domains := tool.SubfinderRun(*urlPtr)
 	urls := tool.HttpxRun(domains)
 	waf.ResolveWafLib()
 
