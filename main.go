@@ -4,11 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"go-wafw00f/tool"
+	"go-wafw00f/util"
 	"go-wafw00f/waf"
 )
 
 func main() {
-
+	util.PrintBanner()
 	urlPtr := flag.String("domain", "", "Enter the domain name")
 	flag.Parse()
 
@@ -24,6 +25,8 @@ func main() {
 	for _, url := range urls {
 
 		resList := waf.DetectWaf(url)
-		fmt.Printf("%s => %s\n", url, resList)
+		if len(resList) > 0 {
+			fmt.Printf("%s => %s\n", url, resList)
+		}
 	}
 }
